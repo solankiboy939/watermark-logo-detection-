@@ -12,8 +12,8 @@ st.title("🔍 Watermark Logo Detection App")
 st.markdown("This app uses your custom-trained YOLOv8 model to detect watermark logos in images.")
 
 # Load your trained YOLOv8 model
-MODEL_PATH = "best.pt"
-model = YOLO(MODEL_PATH)
+
+model = YOLO("best.pt")
 
 # Upload image
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
