@@ -1,0 +1,7 @@
+streamlit
+ultralytics
+opencv-python
+pygame
+numpy
+dill
+torch==2.2.0
