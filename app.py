@@ -40,4 +40,4 @@ if uploaded_file:
             # Convert BGR (from OpenCV) to RGB (for Streamlit)
             bgr_img = results[0].plot()
             rgb_img = cv2.cvtColor(bgr_img, cv2.COLOR_BGR2RGB)
-            st.image(rgb_img, caption="Detected Watermarks", use_column_width=True)
+            st.image(rgb_img, caption="Detected Watermarks", use_container_width=True)
