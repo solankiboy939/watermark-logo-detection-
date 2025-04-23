@@ -2,6 +2,7 @@ streamlit
 ultralytics
 opencv-python
 numpy
+Pillow
 dill
 torch==2.2.0
 
