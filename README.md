@@ -1,5 +1,5 @@
 # watermark-logo-detection-
-watermark logo detection with YOLOV8
+watermark logo detection using YOLOV8
 
 
 
