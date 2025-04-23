@@ -5,3 +5,4 @@ pygame
 numpy
 dill
 torch==2.2.0
+libgl1-mesa-glx
