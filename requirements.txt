@@ -1,6 +1,6 @@
 streamlit
 ultralytics
-numpy
 opencv-python-headless
 Pillow
-torch==2.1.0  # make sure this matches your app's torch version
+numpy
+torch
