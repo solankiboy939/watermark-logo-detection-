@@ -3,4 +3,4 @@ ultralytics
 opencv-python-headless
 Pillow
 numpy
-torch
+torch==2.0.1+cpu  # Use CPU-only PyTorch to avoid CUDA conflicts
