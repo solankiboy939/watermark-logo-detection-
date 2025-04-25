@@ -4,5 +4,3 @@ opencv-python-headless
 Pillow
 numpy
 torch
-msodbcsql17
-unixodbc-dev
