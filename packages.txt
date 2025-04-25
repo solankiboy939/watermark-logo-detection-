@@ -1,2 +1,4 @@
 libgl1
 ffmpeg
+rm -f /etc/apt/sources.list.d/mssql-release.list
+apt-get update
