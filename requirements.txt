@@ -4,3 +4,5 @@ opencv-python-headless
 Pillow
 numpy
 torch
+ffmpeg
+libgl1
