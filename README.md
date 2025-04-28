@@ -6,4 +6,4 @@ watermark logo detection using YOLOV8
 
 
 here's the link
-https://watermarkdetection.streamlit.app/
+https://watermarklogodetecti0n.streamlit.app/
