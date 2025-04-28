@@ -53,7 +53,7 @@ if uploaded_file:
         st.image(image, caption="📷 Uploaded Image", use_container_width=True)
 
         # Confidence threshold slider
-        confidence = st.slider("🎯 Confidence Threshold", 0.1, 1.0, 0.25, 0.05)
+        confidence = st.slider("🎯 Confidence Threshold", 0.1, 1.0, 0.25, 0.01)
 
         col1, col2 = st.columns([1, 3])
         with col1:
