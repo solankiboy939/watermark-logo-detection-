@@ -5,5 +5,5 @@ watermark logo detection using YOLOV8
 
 
 
-here's the link
+here's the link:
 https://watermarklogodetecti0n.streamlit.app/
