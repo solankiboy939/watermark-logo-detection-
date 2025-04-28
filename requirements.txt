@@ -1,6 +1,7 @@
 streamlit
 ultralytics
-Pillow
 opencv-python
-cleanup.sh
+Pillow
+numpy
+
 
