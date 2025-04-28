@@ -52,7 +52,7 @@ st.markdown("""
             padding: 2rem;
             text-align: center;
             margin: 1.5rem 0;
-            background: #F9FAFB;
+            background: rgba(249, 250, 251, 0.1);
         }
         
         .stButton>button {
@@ -67,7 +67,7 @@ st.markdown("""
         .footer {
             text-align: center;
             padding: 1.5rem;
-            color: #6B7280;
+            color: #9CA3AF;
             font-size: 0.875rem;
             margin-top: 2rem;
         }
@@ -78,7 +78,7 @@ st.markdown("""
 st.markdown("""
     <div style="text-align: center; margin-bottom: 2rem;">
         <h1>🔍 Watermark Detector Pro</h1>
-        <p style="color: #4B5563;">
+        <p style="color: #D1D5DB;">
             Professional Watermark Detection Solution
         </p>
     </div>
@@ -104,7 +104,7 @@ if uploaded_file:
     else:
         # Image preview
         image = Image.open(uploaded_file).convert("RGB")
-        st.image(image, caption="Uploaded Image", use_column_width=True)
+        st.image(image, caption="Uploaded Image", use_container_width=True)
 
         # Detection controls
         confidence = st.slider(
@@ -134,7 +134,7 @@ if uploaded_file:
                     st.image(
                         cv2.cvtColor(results[0].plot(), cv2.COLOR_BGR2RGB),
                         caption="Detection Results",
-                        use_column_width=True
+                        use_container_width=True
                     )
 
 # Footer
