@@ -84,7 +84,7 @@ st.markdown("""
         }
         
         .result-card {
-            background: white;
+            background: rgba(46, 29, 25);
             border-radius: 15px;
             padding: 2rem;
             margin: 2rem 0;
