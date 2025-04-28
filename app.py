@@ -13,14 +13,14 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# High-Contrast UI CSS
+# Fixed Contrast UI CSS
 st.markdown("""
     <style>
         :root {
-            --primary: #1E40AF;
-            --secondary: #1E3A8A;
-            --text: #e6eaed;
-            --background: #F3F4F6;
+            --primary: #2563EB;
+            --secondary: #1D4ED8;
+            --text: #F3F4F6;
+            --background: #1F2937;
         }
         
         body {
@@ -28,31 +28,26 @@ st.markdown("""
             background-color: var(--background) !important;
         }
         
-        .main {
-            background: var(--background);
-        }
-        
         .block-container {
-            background: linear-gradient(to right, rgb(20, 30, 48), rgb(36, 59, 85));
+            background: #111827;
             border-radius: 12px;
             padding: 2rem;
             margin: 2rem auto;
             max-width: 800px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #E5E7EB;
+            border: 1px solid #374151;
         }
         
-        h1, h2, h3 {
+        h1, h2, h3, p {
             color: var(--text) !important;
         }
         
         .upload-section {
-            border: 2px dashed #E5E7EB;
+            border: 2px dashed #374151;
             border-radius: 8px;
             padding: 2rem;
             text-align: center;
             margin: 1.5rem 0;
-            background: #F9FAFB;
+            background: rgba(55, 65, 81, 0.3);
         }
         
         .stButton>button {
@@ -67,9 +62,17 @@ st.markdown("""
         .footer {
             text-align: center;
             padding: 1.5rem;
-            color: #6B7280;
+            color: #9CA3AF;
             font-size: 0.875rem;
             margin-top: 2rem;
+        }
+        
+        /* Fix slider and text input colors */
+        .stSlider .st-cc, .stSlider .st-cd {
+            color: var(--text) !important;
+        }
+        .st-bh, .st-bg, .st-bf {
+            color: var(--text) !important;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -78,7 +81,7 @@ st.markdown("""
 st.markdown("""
     <div style="text-align: center; margin-bottom: 2rem;">
         <h1>🔍 Watermark Detector Pro</h1>
-        <p style="color: #4B5563;">
+        <p style="color: #D1D5DB;">
             Professional Watermark Detection Solution
         </p>
     </div>
