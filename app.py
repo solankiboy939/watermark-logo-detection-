@@ -13,7 +13,10 @@ st.markdown("This app uses your custom-trained YOLOv8 model to detect watermark 
 
 # Load your trained YOLOv8 model
 MODEL_PATH = "best.pt"
-model = YOLO(MODEL_PATH)
+try:
+    model = YOLO(MODEL_PATH)
+except Exception as e:
+    st.error(f"Error loading model: {e}")
 
 # Upload image
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
@@ -23,6 +26,9 @@ if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")  # ensure it's RGB
     st.image(image, caption="Uploaded Image", use_container_width=True)
 
+    # Add confidence threshold slider
+    conf_threshold = st.slider("Confidence Threshold", 0.0, 1.0, 0.25)
+
     if st.button("Run Detection"):
         st.write("🧠 Detecting watermark logos...")
 
@@ -31,8 +37,9 @@ if uploaded_file:
             image.save(tmp.name)
             temp_img_path = tmp.name
 
-        # Run detection with fixed confidence
-        results = model.predict(source=temp_img_path, conf=0.25, save=False)
+        with st.spinner('Detecting watermark logos...'):
+            # Run detection with dynamic confidence
+            results = model.predict(source=temp_img_path, conf=conf_threshold, save=False)
 
         if len(results[0].boxes) == 0:
             st.warning("🚫 No watermark logo detected.")
