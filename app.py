@@ -2,57 +2,84 @@ import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
 import cv2
+import numpy as np
 import tempfile
 
-# Set page title
-st.set_page_config(page_title="Watermark Logo Detector")
+# Set page configuration
+st.set_page_config(page_title="Watermark Logo Detector", page_icon="🔍", layout="centered")
 
-st.title("🔍 Watermark Logo Detection App")
-st.markdown("This app uses your custom-trained YOLOv8 model to detect watermark logos in images.")
+# Custom CSS for styling
+st.markdown("""
+    <style>
+        .main {
+            background-color: #f9f9f9;
+        }
+        .block-container {
+            padding-top: 2rem;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .stButton>button {
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 8px;
+            padding: 0.6em 1.5em;
+            font-weight: bold;
+        }
+        .stButton>button:hover {
+            background-color: #1a252f;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
-# Load your trained YOLOv8 model
+st.title("🔍 Watermark Logo Detector")
+st.markdown("Detect watermark logos in uploaded images using your custom-trained **YOLOv8** model.")
+
+# Load YOLOv8 model
 MODEL_PATH = "best.pt"
-try:
-    model = YOLO(MODEL_PATH)
-except Exception as e:
-    st.error(f"Error loading model: {e}")
+model = YOLO(MODEL_PATH)
 
 # Upload image
-uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("📤 Upload an image here", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
-    # Ensure it's an image file
-    if uploaded_file.type not in ['image/jpeg', 'image/png']:
-        st.error("Please upload a valid image file (jpg, jpeg, or png).")
+    # Check file size
+    file_size = uploaded_file.size / (1024 * 1024)
+    if file_size > 5:
+        st.warning("⚠️ File size is too large. Please upload an image smaller than 5MB.")
     else:
-        # Display image
-        image = Image.open(uploaded_file).convert("RGB")  # ensure it's RGB
-        st.image(image, caption="Uploaded Image", use_container_width=True)
+        image = Image.open(uploaded_file).convert("RGB")
+        st.image(image, caption="📷 Uploaded Image", use_container_width=True)
 
-        # Add confidence threshold slider
-        conf_threshold = st.slider("Confidence Threshold", 0.0, 1.0, 0.25)
+        # Confidence threshold slider
+        confidence = st.slider("🎯 Confidence Threshold", 0.1, 1.0, 0.25, 0.05)
 
-        if st.button("Run Detection"):
-            st.write("🧠 Detecting watermark logos...")
+        col1, col2 = st.columns([1, 3])
+        with col1:
+            detect_btn = st.button("🚀 Run Detection")
+        with col2:
+            st.empty()
 
-            # Save temporarily to run detection
+        if detect_btn:
+            st.info("Processing image...")
+
             with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
                 image.save(tmp.name)
                 temp_img_path = tmp.name
 
-            with st.spinner('Detecting watermark logos...'):
-                # Run detection with dynamic confidence
-                results = model.predict(source=temp_img_path, conf=conf_threshold, save=False)
+            # Run YOLOv8 detection
+            results = model.predict(source=temp_img_path, conf=confidence, save=False)
 
-            if len(results[0].boxes) == 0:
-                st.warning("🚫 No watermark logo detected.")
+            boxes = results[0].boxes
+            if len(boxes) == 0:
+                st.warning("🚫 No watermark logos detected.")
             else:
-                # Convert BGR (from OpenCV) to RGB (for Streamlit)
                 bgr_img = results[0].plot()
                 rgb_img = cv2.cvtColor(bgr_img, cv2.COLOR_BGR2RGB)
-                st.image(rgb_img, caption="Detected Watermarks", use_container_width=True)
+                st.success(f"✅ Detected {len(boxes)} watermark logo(s).")
+                st.image(rgb_img, caption="🎯 Detection Result", use_container_width=True)
 
-                # Optionally display detected watermark info
-                st.write(f"Number of watermarks detected: {len(results[0].boxes)}")
-                for i, box in enumerate(results[0].boxes):
-                    st.write(f"Detected watermark {i+1} with confidence: {box.confidence:.2f}")
+# Footer
+st.markdown("---")
+st.markdown("<center><small>© 2025 Watermark Logo Detector | Built using YOLOv8 & Streamlit</small></center>", unsafe_allow_html=True)
