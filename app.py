@@ -7,108 +7,108 @@ import tempfile
 
 # Set page configuration
 st.set_page_config(
-    page_title="AquaVision Pro",
-    page_icon="🌊",
+    page_title="AquaMark Analyzer",
+    page_icon="🔍",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# Modern Gradient UI CSS
+# High-Contrast UI CSS
 st.markdown("""
     <style>
         :root {
-            --primary: #1a73e8;
-            --secondary: #0d47a1;
-            --accent: #00c853;
-            --text: #2d3436;
+            --primary: #1A56DB;
+            --secondary: #1E429F;
+            --accent: #3B82F6;
+            --text: #111827;
+            --background: #F9FAFB;
         }
         
         .main {
-            background: linear-gradient(145deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: var(--background);
             min-height: 100vh;
         }
         
         .block-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 2rem 3rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             margin: 2rem auto;
             max-width: 800px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid #E5E7EB;
         }
         
         .header {
             text-align: center;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
+            padding: 1.5rem 0;
+            margin-bottom: 1rem;
         }
         
         h1 {
             color: var(--text);
-            font-size: 2.8rem;
+            font-size: 2.25rem;
             margin-bottom: 0.5rem;
             font-weight: 700;
-            letter-spacing: -0.5px;
         }
         
         .upload-section {
-            border: 2px dashed #1a73e8;
-            border-radius: 15px;
-            padding: 2.5rem;
+            border: 2px dashed #E5E7EB;
+            border-radius: 8px;
+            padding: 2rem;
             text-align: center;
-            margin: 2rem 0;
-            background: rgba(26, 115, 232, 0.03);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 1.5rem 0;
+            background: #F9FAFB;
+            transition: all 0.2s ease;
         }
         
         .upload-section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(26, 115, 232, 0.1);
+            border-color: var(--accent);
+            background: #F3F4F6;
         }
         
         .stButton>button {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--primary);
             color: white !important;
             border: none;
-            padding: 12px 30px;
-            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
+            transition: all 0.2s ease;
         }
         
         .stButton>button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.2);
+            background: var(--secondary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
         .result-card {
-            background: rgba(46, 29, 25);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid #E5E7EB;
         }
         
-        .confidence-slider .stSlider {
-            margin: 1.5rem 0;
+        .stSlider {
+            margin: 1rem 0;
         }
         
         .footer {
             text-align: center;
             padding: 1.5rem;
-            color: #636e72;
-            font-size: 0.9rem;
+            color: #6B7280;
+            font-size: 0.875rem;
             margin-top: 2rem;
         }
         
         .metric-box {
-            background: rgba(26, 115, 232, 0.08);
-            border-radius: 12px;
+            background: #F3F4F6;
+            border-radius: 6px;
             padding: 1rem;
             margin: 1rem 0;
+            border: 1px solid #E5E7EB;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -116,9 +116,9 @@ st.markdown("""
 # Header Section
 st.markdown("""
     <div class="header">
-        <h1>🌊 AquaVision Pro</h1>
-        <p style="color: #636e72; font-size: 1.1rem; margin-top: 0.5rem;">
-            Advanced Watermark Detection Platform
+        <h1>🔍 AquaMark Analyzer</h1>
+        <p style="color: #6B7280; margin-top: 0.5rem;">
+            Professional Watermark Detection Solution
         </p>
     </div>
 """, unsafe_allow_html=True)
@@ -132,7 +132,7 @@ with st.container():
     st.markdown("""
         <div class="upload-section">
             <h3 style="color: var(--text); margin-bottom: 1rem;">📤 Upload Image</h3>
-            <p style="color: #636e72;">Supported formats: JPG, PNG | Max size: 5MB</p>
+            <p style="color: #6B7280;">Supported formats: JPG, PNG | Max size: 5MB</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -202,7 +202,7 @@ if uploaded_file:
 # Footer
 st.markdown("""
     <div class="footer">
-        © 2024 AquaVision Pro | Enterprise-grade Detection System<br>
-        v3.0.1 | ISO 27001 Certified | GDPR Compliant
+        © 2024 AquaMark Analyzer | Enterprise-grade Detection System<br>
+        v4.0.0 | WCAG 2.1 AA Compliant
     </div>
 """, unsafe_allow_html=True)
