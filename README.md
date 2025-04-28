@@ -25,3 +25,13 @@ To install the necessary dependencies, run the following command:
 
 ```bash
 pip install -r requirements.txt
+
+```
+## How to Use
+
+1. **Visit the Web App**: You can access the watermark logo detection tool by visiting the following link:  
+   [Watermark Logo Detector](https://watermarklogodetecti0n.streamlit.app/)
+2. **Upload an Image**: Click on the "Upload Image" button to upload your image in JPG, JPEG, or PNG format.
+3. **Adjust Confidence Threshold**: Use the slider to set the minimum confidence for detection. The higher the threshold, the fewer but more confident detections will be made.
+4. **Run Detection**: Click the "Run Detection" button to initiate the process. The application will display the results with bounding boxes around the detected watermark logos.
+5. **View Results**: After detection, the image with marked watermark logos will be shown.
