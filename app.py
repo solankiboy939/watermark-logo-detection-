@@ -33,7 +33,7 @@ st.markdown("""
         }
         
         .block-container {
-            background: linear-gradient(to right, rgb(248, 229, 173), rgb(194, 211, 238));
+            background: linear-gradient(to right, rgb(30, 58, 138), rgb(96, 165, 250));
             border-radius: 12px;
             padding: 2rem;
             margin: 2rem auto;
