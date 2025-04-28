@@ -33,7 +33,7 @@ st.markdown("""
         }
         
         .block-container {
-            background: white;
+            background: black;
             border-radius: 12px;
             padding: 2rem;
             margin: 2rem auto;
