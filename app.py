@@ -19,7 +19,7 @@ st.markdown("""
         :root {
             --primary: #1E40AF;
             --secondary: #1E3A8A;
-            --text: #0f151c;
+            --text: #040608;
             --background: #F3F4F6;
         }
         
