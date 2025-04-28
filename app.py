@@ -7,40 +7,40 @@ import tempfile
 
 # Set page configuration
 st.set_page_config(
-    page_title="AquaMark Pro - Watermark Detection Suite",
-    page_icon=":mag:",
+    page_title="AquaVision Pro",
+    page_icon="🌊",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# Gradient Background CSS
+# Modern Gradient UI CSS
 st.markdown("""
     <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #4f46e5;
-            --accent: #f59e0b;
-            --text: #ffffff;
+            --primary: #1a73e8;
+            --secondary: #0d47a1;
+            --accent: #00c853;
+            --text: #2d3436;
         }
         
         .main {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(145deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
         }
         
         .block-container {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
+            padding: 2rem 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
             margin: 2rem auto;
             max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .header {
             text-align: center;
-            padding: 1.5rem 0;
+            padding: 2rem 0;
             margin-bottom: 2rem;
         }
         
@@ -48,49 +48,48 @@ st.markdown("""
             color: var(--text);
             font-size: 2.8rem;
             margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, #fff, #e0e7ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
         
-        .upload-container {
-            border: 2px dashed rgba(255, 255, 255, 0.3);
+        .upload-section {
+            border: 2px dashed #1a73e8;
             border-radius: 15px;
             padding: 2.5rem;
             text-align: center;
             margin: 2rem 0;
-            background: rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            background: rgba(26, 115, 232, 0.03);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .upload-container:hover {
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.15);
+        .upload-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(26, 115, 232, 0.1);
         }
         
         .stButton>button {
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white !important;
             border: none;
             padding: 12px 30px;
             border-radius: 10px;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
         }
         
         .stButton>button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            background: white !important;
+            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.2);
         }
         
         .result-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: white;
             border-radius: 15px;
             padding: 2rem;
             margin: 2rem 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         .confidence-slider .stSlider {
@@ -100,9 +99,16 @@ st.markdown("""
         .footer {
             text-align: center;
             padding: 1.5rem;
-            color: rgba(255, 255, 255, 0.8);
+            color: #636e72;
             font-size: 0.9rem;
             margin-top: 2rem;
+        }
+        
+        .metric-box {
+            background: rgba(26, 115, 232, 0.08);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -110,9 +116,9 @@ st.markdown("""
 # Header Section
 st.markdown("""
     <div class="header">
-        <h1>🌐 AquaMark Pro</h1>
-        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.2rem;">
-            Enterprise-Grade Watermark Recognition System
+        <h1>🌊 AquaVision Pro</h1>
+        <p style="color: #636e72; font-size: 1.1rem; margin-top: 0.5rem;">
+            Advanced Watermark Detection Platform
         </p>
     </div>
 """, unsafe_allow_html=True)
@@ -124,9 +130,9 @@ model = YOLO(MODEL_PATH)
 # Upload Section
 with st.container():
     st.markdown("""
-        <div class="upload-container">
-            <h3 style="color: white; margin-bottom: 1rem;">📤 Drag & Drop Media</h3>
-            <p style="color: rgba(255, 255, 255, 0.8);">Supported formats: JPG, PNG | Max size: 5MB</p>
+        <div class="upload-section">
+            <h3 style="color: var(--text); margin-bottom: 1rem;">📤 Upload Image</h3>
+            <p style="color: #636e72;">Supported formats: JPG, PNG | Max size: 5MB</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -136,11 +142,11 @@ if uploaded_file:
     # File validation
     file_size = uploaded_file.size / (1024 * 1024)
     if file_size > 5:
-        st.error("⚠️ File size exceeds maximum limit (5MB)")
+        st.error("⚠️ File exceeds 5MB limit")
     else:
         # Image preview
         image = Image.open(uploaded_file).convert("RGB")
-        with st.expander("🖼️ UPLOAD PREVIEW", expanded=True):
+        with st.expander("🖼️ IMAGE PREVIEW", expanded=True):
             st.image(image, use_column_width=True)
 
         # Detection controls
@@ -148,16 +154,16 @@ if uploaded_file:
         col1, col2 = st.columns([1, 2])
         with col1:
             confidence = st.slider(
-                "Detection Sensitivity",
+                "Confidence Threshold",
                 min_value=0.1,
                 max_value=1.0,
                 value=0.25,
                 step=0.01,
-                help="Adjust model confidence threshold"
+                help="Adjust detection sensitivity level"
             )
         with col2:
-            if st.button("🚀 Start Analysis", use_container_width=True):
-                with st.spinner("Analyzing content for watermarks..."):
+            if st.button("🔍 Detect Watermarks", use_container_width=True):
+                with st.spinner("Analyzing image..."):
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
                         image.save(tmp.name)
                         temp_img_path = tmp.name
@@ -168,29 +174,35 @@ if uploaded_file:
                     
                     # Display results
                     with st.container():
-                        st.markdown("## 📊 Detection Report")
+                        st.markdown("## 📄 Results Summary")
                         if len(boxes) == 0:
                             st.warning("No watermarks detected")
                         else:
-                            st.success(f"**{len(boxes)}** watermarks identified")
-                            bgr_img = results[0].plot()
-                            rgb_img = cv2.cvtColor(bgr_img, cv2.COLOR_BGR2RGB)
-                            
-                            # Result card styling
                             with st.container():
-                                st.image(rgb_img, caption="Processed Analysis", use_column_width=True)
-                                with st.expander("🔍 Technical Insights", expanded=False):
+                                col_a, col_b = st.columns(2)
+                                with col_a:
+                                    st.metric("Total Detections", len(boxes))
+                                with col_b:
+                                    st.metric("Average Confidence", f"{np.mean(boxes.conf.numpy()):.1%}")
+                                
+                                st.image(
+                                    cv2.cvtColor(results[0].plot(), cv2.COLOR_BGR2RGB),
+                                    caption="Detection Visualization",
+                                    use_column_width=True
+                                )
+                                
+                                with st.expander("Technical Details", expanded=False):
                                     st.json({
-                                        "detections": len(boxes),
-                                        "confidence_range": f"{min(boxes.conf.numpy()):.2%} - {max(boxes.conf.numpy()):.2%}",
-                                        "image_resolution": results[0].orig_shape,
-                                        "processing_time": f"{sum(results[0].speed.values()):.1f}ms"
+                                        "image_dimensions": results[0].orig_shape,
+                                        "processing_time": f"{sum(results[0].speed.values()):.1f}ms",
+                                        "model_version": "YOLOv8n",
+                                        "detection_areas": [box.xyxy.tolist() for box in boxes]
                                     })
 
 # Footer
 st.markdown("""
     <div class="footer">
-        © 2024 AquaMark Pro | Enterprise Watermark Detection Solution<br>
-        v2.1.0 | ISO 27001 Certified System
+        © 2024 AquaVision Pro | Enterprise-grade Detection System<br>
+        v3.0.1 | ISO 27001 Certified | GDPR Compliant
     </div>
 """, unsafe_allow_html=True)
