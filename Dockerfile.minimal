@@ -1,0 +1,43 @@
+# Minimal Dockerfile for Watermark Detector Pro (for platforms with build time limits)
+FROM python:3.10-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+# Install only essential system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set work directory
+WORKDIR /app
+
+# Copy application files
+COPY backend.py .
+COPY frontend/ ./frontend/
+COPY best.pt .
+
+# Install only essential Python packages
+RUN pip install --no-cache-dir \
+    fastapi==0.104.1 \
+    uvicorn==0.24.0 \
+    python-multipart==0.0.6 \
+    Pillow==10.1.0 \
+    numpy==1.24.3 \
+    torch==2.1.1+cpu --index-url https://download.pytorch.org/whl/cpu \
+    opencv-python-headless==4.8.1.78 \
+    ultralytics==8.0.196
+
+# Create uploads directory
+RUN mkdir -p uploads
+
+# Expose port
+EXPOSE 8000
+
+# Simple health check
+HEALTHCHECK --interval=60s --timeout=10s --start-period=60s --retries=2 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Run the application
+CMD ["python", "backend.py"]

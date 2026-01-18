@@ -1,11 +1,12 @@
-# Lightweight Dockerfile for Watermark Detector Pro
+# Ultra-lightweight Dockerfile for Watermark Detector Pro
 FROM python:3.10-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     DEBIAN_FRONTEND=noninteractive \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DEFAULT_TIMEOUT=100
 
 # Install minimal system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -18,12 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Set work directory
 WORKDIR /app
 
-# Copy and install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
+# Copy only necessary files first
 COPY backend.py .
 COPY frontend/ ./frontend/
 COPY best.pt .
@@ -31,11 +27,31 @@ COPY best.pt .
 # Create uploads directory
 RUN mkdir -p uploads
 
+# Install dependencies directly (no requirements.txt to avoid timeout)
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir \
+    fastapi==0.104.1 \
+    "uvicorn[standard]==0.24.0" \
+    python-multipart==0.0.6 \
+    Pillow==10.1.0 \
+    numpy==1.24.3 \
+    torch==2.1.1+cpu \
+    torchvision==0.16.1+cpu \
+    --index-url https://download.pytorch.org/whl/cpu && \
+    pip install --no-cache-dir \
+    opencv-python-headless==4.8.1.78 \
+    ultralytics==8.0.196
+
+# Create non-root user
+RUN useradd --create-home --shell /bin/bash --uid 1000 app && \
+    chown -R app:app /app
+USER app
+
 # Expose port
 EXPOSE 8000
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=10s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
 # Run the application
