@@ -3,7 +3,7 @@ services:
     name: watermark-detector-pro
     env: docker
     plan: starter
-    dockerfilePath: ./Dockerfile.minimal
+    dockerfilePath: ./Dockerfile.simple
     envVars:
       - key: PYTHONPATH
         value: /app
@@ -15,5 +15,5 @@ services:
       paths:
       - backend.py
       - frontend/**
-      - Dockerfile.minimal
+      - Dockerfile.simple
       - best.pt

@@ -18,16 +18,24 @@ COPY backend.py .
 COPY frontend/ ./frontend/
 COPY best.pt .
 
-# Install only essential Python packages
+# Install Python packages in separate steps to avoid index conflicts
+RUN pip install --no-cache-dir --upgrade pip
+
+# Install standard packages first
 RUN pip install --no-cache-dir \
-    fastapi==0.104.1 \
-    uvicorn==0.24.0 \
-    python-multipart==0.0.6 \
-    Pillow==10.1.0 \
-    numpy==1.24.3 \
-    torch==2.1.1+cpu --index-url https://download.pytorch.org/whl/cpu \
-    opencv-python-headless==4.8.1.78 \
-    ultralytics==8.0.196
+    fastapi \
+    uvicorn \
+    python-multipart \
+    Pillow \
+    numpy
+
+# Install PyTorch CPU version from specific index
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+# Install remaining ML packages
+RUN pip install --no-cache-dir \
+    opencv-python-headless \
+    ultralytics
 
 # Create uploads directory
 RUN mkdir -p uploads
