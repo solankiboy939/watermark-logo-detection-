@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Watermark Detector Pro</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-search"></i>
+                        <h1>Watermark Detector Pro</h1>
+                    </div>
+                    <div class="header-subtitle">
+                        Professional AI-Powered Watermark Detection
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Upload Section -->
+                <section class="upload-section">
+                    <div class="upload-card">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-content">
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <h3>Upload Your Image</h3>
+                                <p>Drag and drop an image here, or click to browse</p>
+                                <div class="upload-formats">
+                                    <span>Supports: JPG, PNG, JPEG</span>
+                                    <span>Max size: 10MB</span>
+                                </div>
+                            </div>
+                            <input type="file" id="fileInput" accept="image/*" hidden>
+                        </div>
+                        
+                        <!-- File Info -->
+                        <div class="file-info" id="fileInfo" style="display: none;">
+                            <div class="file-details">
+                                <i class="fas fa-file-image"></i>
+                                <div class="file-text">
+                                    <div class="file-name" id="fileName"></div>
+                                    <div class="file-size" id="fileSize"></div>
+                                </div>
+                                <button class="btn-remove" id="removeFile">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Controls Section -->
+                <section class="controls-section" id="controlsSection" style="display: none;">
+                    <div class="controls-card">
+                        <h3><i class="fas fa-cog"></i> Detection Settings</h3>
+                        
+                        <div class="control-group">
+                            <label for="confidenceSlider">
+                                Confidence Threshold: <span id="confidenceValue">0.25</span>
+                            </label>
+                            <div class="slider-container">
+                                <input type="range" id="confidenceSlider" min="0.1" max="1.0" step="0.01" value="0.25">
+                                <div class="slider-labels">
+                                    <span>0.1</span>
+                                    <span>1.0</span>
+                                </div>
+                            </div>
+                            <div class="slider-help">
+                                <i class="fas fa-info-circle"></i>
+                                Higher values = fewer but more confident detections
+                            </div>
+                        </div>
+
+                        <button class="btn-primary btn-detect" id="detectBtn">
+                            <i class="fas fa-search"></i>
+                            Detect Watermarks
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Results Section -->
+                <section class="results-section" id="resultsSection" style="display: none;">
+                    <div class="results-header">
+                        <h3><i class="fas fa-chart-bar"></i> Detection Results</h3>
+                        <div class="results-stats" id="resultsStats"></div>
+                    </div>
+
+                    <!-- Image Comparison -->
+                    <div class="image-comparison">
+                        <div class="image-container">
+                            <div class="image-header">
+                                <h4><i class="fas fa-image"></i> Original Image</h4>
+                            </div>
+                            <div class="image-wrapper">
+                                <img id="originalImage" alt="Original Image">
+                            </div>
+                        </div>
+
+                        <div class="image-container">
+                            <div class="image-header">
+                                <h4><i class="fas fa-crosshairs"></i> Detection Results</h4>
+                            </div>
+                            <div class="image-wrapper">
+                                <img id="resultImage" alt="Detection Results">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detection Details -->
+                    <div class="detection-details" id="detectionDetails">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Loading Overlay -->
+                <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <h3>Analyzing Image...</h3>
+                        <p>Please wait while we detect watermarks</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-text">
+                        © 2024 Watermark Detector Pro | Powered by YOLOv8
+                    </div>
+                    <div class="footer-links">
+                        <a href="#" onclick="showAbout()">About</a>
+                        <a href="#" onclick="showHelp()">Help</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Toast Notifications -->
+        <div class="toast-container" id="toastContainer"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -5,3 +5,12 @@ Pillow
 numpy
 torch
 dill
+
+# GUI Dependencies
+customtkinter
+PyQt6
+
+# Web Framework Dependencies
+fastapi
+uvicorn[standard]
+python-multipart

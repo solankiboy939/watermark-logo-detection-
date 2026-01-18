@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    },
+    {
+      "src": "frontend/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/frontend/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/backend.py"
+    }
+  ],
+  "env": {
+    "PYTHONPATH": "/var/task",
+    "MODEL_PATH": "/var/task/best.pt"
+  },
+  "functions": {
+    "backend.py": {
+      "maxDuration": 60
+    }
+  }
+}

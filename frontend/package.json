@@ -1,0 +1,32 @@
+{
+  "name": "watermark-detector-frontend",
+  "version": "1.0.0",
+  "description": "Modern frontend for Watermark Detector Pro",
+  "main": "static/js/app.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "watermark",
+    "detection",
+    "yolo",
+    "ai",
+    "typescript",
+    "frontend"
+  ],
+  "author": "Watermark Detector Pro",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

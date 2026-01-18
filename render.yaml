@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: watermark-detector-pro
+    env: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PYTHONPATH
+        value: /app
+      - key: MODEL_PATH
+        value: /app/best.pt
+    healthCheckPath: /health
+    autoDeploy: false
+    buildFilter:
+      paths:
+      - backend.py
+      - frontend/**
+      - requirements.txt
+      - Dockerfile
+      - best.pt
