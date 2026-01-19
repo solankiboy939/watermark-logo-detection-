@@ -4,16 +4,11 @@ FROM python:3.10-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PIP_ROOT_USER_ACTION=ignore
+ENV DISPLAY=:99
 
-# Install system dependencies including missing libraries
+# Install minimal system dependencies
 RUN apt-get update && apt-get install -y \
     curl \
-    libxcb1 \
-    libxrender1 \
-    libxext6 \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
-    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
@@ -25,7 +20,7 @@ COPY . .
 # Create directories
 RUN mkdir -p uploads
 
-# Install dependencies in one go to reduce layers
+# Install dependencies - use headless versions only
 RUN pip install --no-cache-dir \
     fastapi==0.104.1 \
     uvicorn==0.24.0 \
