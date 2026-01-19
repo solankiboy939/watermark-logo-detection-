@@ -1,6 +1,6 @@
 FROM python:3.10-slim
 
-# Environment variables
+# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PIP_ROOT_USER_ACTION=ignore
@@ -11,19 +11,29 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 # Set working directory
 WORKDIR /app
 
-# Copy files
+# Copy all files
 COPY . .
 
-# Create uploads directory
+# Create directories
 RUN mkdir -p uploads
 
-# Install Python dependencies
-RUN pip install --no-cache-dir fastapi uvicorn python-multipart Pillow numpy
-RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
-RUN pip install --no-cache-dir opencv-python-headless ultralytics
+# Install dependencies in one go to reduce layers
+RUN pip install --no-cache-dir \
+    fastapi==0.104.1 \
+    uvicorn==0.24.0 \
+    python-multipart==0.0.6 \
+    Pillow==10.1.0 \
+    numpy==1.24.3 && \
+    pip install --no-cache-dir \
+    torch==2.1.1+cpu \
+    torchvision==0.16.1+cpu \
+    --index-url https://download.pytorch.org/whl/cpu && \
+    pip install --no-cache-dir \
+    opencv-python-headless==4.8.1.78 \
+    ultralytics==8.0.196
 
 # Expose port
 EXPOSE 8000
 
-# Start the application
+# Run the application
 CMD ["python", "backend.py"]
